@@ -37,6 +37,12 @@ namespace Server.Controllers
                 return false;
         }
 
+        [HttpGet("GetByEmailUser/{email}")]
+        public User GetUserByEmail(string email)
+        {
+            return Context.Users.FirstOrDefault(c => c.Email == email.ToLower());
+        }
+
         [HttpGet("GetByName/{name}")]
         public User GetByName(string name)
         {

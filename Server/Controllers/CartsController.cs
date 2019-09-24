@@ -38,6 +38,20 @@ namespace Server.Controllers
             return carts;
         }
 
+        [HttpGet("GetUserTotal/{userID}")]
+        public double GetUserTotal(string userId)
+        {
+            double total = 0;
+            List<Cart> carts = Context.Carts.Where(c => c.UserId == Int32.Parse(userId)).ToList();
+            for (int i = 0; i < carts.Count; i++)
+            {
+                double price = Context.Products.SingleOrDefault(p => p.ProductId == carts[i].ProductId).Price;
+                int quantity = carts[i].Quantity;
+                total += (price * quantity);
+            }
+            return total;
+        }
+
         [HttpPost]
         public Cart CreateCart([FromBody] Cart cart)
         {
